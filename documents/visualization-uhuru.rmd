@@ -1,0 +1,15 @@
+---
+title: "UHURU Data Set Visualization"
+author: "Charles"
+date: "2023-02-23"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The Working directory inside this Rmarkdown r chunk is the following:
+```{r}
+getwd()
+```
