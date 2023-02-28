@@ -28,3 +28,28 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r eval =TRUE}
+acacia <- read.csv(file = "../data-raw/ACACIA_DREPANOLOBIUM_SURVEY.txt", 
+                   sep = "\t",
+                   na.strings = 'dead')
+
+```
+
+```{r}
+head(acacia)
+```
+
+```{r}
+library(ggplot2)
+ggplot(data = acacia, mapping = aes(x = HEIGHT, y = FRUITS, color = ANT)) +
+  geom_point(size = 3, alpha = 0.5) +
+  facet_wrap(~ANT)
+```
+
+
+
+
+
+
+
