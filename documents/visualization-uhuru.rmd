@@ -13,3 +13,96 @@ The Working directory inside this Rmarkdown r chunk is the following:
 ```{r}
 getwd()
 ```
+
+Note: remember that working directories in a project and in an R chunk are not always the same
+
+## 1. Describing the working data set
+
+UHURU data set
+
+## 2. Reading the data set
+
+we are reading the dataset into tsv (tab separated values).
+```{r eval =TRUE}
+read.csv(file = "../data-raw/ACACIA_DREPANOLOBIUM_SURVEY.txt", sep = "\t")
+```
+
+Assign the data to a variable so we can wirk with it
+```{r eval =TRUE}
+acacia <- read.csv(file = "../data-raw/ACACIA_DREPANOLOBIUM_SURVEY.txt", sep = "\t")
+```
+
+```{r}
+head(acacia)
+str(acacia)
+
+
+numbers <- 1:10
+numbers
+numbers[3:6]
+
+
+acacia
+```
+
+
+###Accessing elements of a data frame
+
+It is similar to what we do for vectors, but there are two dimensions to a data frame
+
+```{r}
+acacia[8]
+acacia$SURVEY
+acacia[, "SURVEY"]
+acacia$HEIGHT
+as.numeric(acacia$HEIGHT)
+```
+
+### Replacing numbers in a data frame
+
+
+
+```{r}
+numbers
+```
+We identified that the HEIGHT should be numeric
+```{r}
+acacia$HEIGHT <- as.numeric(acacia$HEIGHT)
+acacia$HEIGHT
+```
+```{r}
+acacia <- read.csv(file = "../data-raw/ACACIA_DREPANOLOBIUM_SURVEY.txt", 
+                   sep = "\t",
+                   na.strings = "dead")
+is.numeric(acacia$HEIGHT) 
+head(acacia)
+```
+
+
+
+
+
+
+```{r}
+plot(x = acacia$HEIGHT, y = acacia$AXIS1, main = "Acacia height vs Axis")
+legend(x = 1, y = 5, legend = "Acacia Trees")
+```
+With GGplot, we create layers
+
+```{r}
+library(ggplot2)
+
+ggplot(data = acacia, mapping = aes(x = HEIGHT, y = AXIS1, color = TREATMENT)) +
+  geom_point(size = 5) +
+  labs(x = "Tree height", y = "Tree axis 1")
+```
+
+# THE DEAL WITH THIS EXPERIMENT:
+How does excluding certain classes of animals change tree height in an area?
+
+# MEASURED VARIABLES:
+Variables measured include plot number, height, rainfall, circumference, flowers, buds, fruit, and ants.
+
+# WHAT HAPPENED TO THE OPEN PLOTS?:
+Open plots tended to have low tree heights, maybe because of all the grazing that happened
+
