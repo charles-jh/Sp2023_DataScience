@@ -47,9 +47,56 @@ ggplot(data = acacia, mapping = aes(x = HEIGHT, y = FRUITS, color = ANT)) +
   facet_wrap(~ANT)
 ```
 
+### Exercise 1.
+
+```{r}
+library(ggplot2)
+ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1, color = ANT)) +
+  geom_point(size = 3, alpha = 0.5) +
+  scale_y_log10() +
+  scale_x_log10() +
+  labs(x = "Tree circumference", y = "Tree axis 1")
+```
+
+#Exercise 2
+
+```{r}
+library(ggplot2)
+
+ggplot(data = acacia, mapping = aes(x = ANT)) +
+  geom_bar()
+```
 
 
+```{r}
+library(ggplot2)
 
+ggplot(data = acacia, mapping = aes(x = as.double(HEIGHT))) +
+  geom_histogram()
+```
 
+```{r}
+library(ggplot2)
 
+ggplot() +
+  geom_histogram(data = acacia,
+                 mapping = aes(x = AXIS1, fill = "red"),
+                 alpha = 0.3) +
+  geom_histogram(data = acacia,
+                 mapping = aes(x = AXIS2, fill = "black"),
+                 alpha = 0.3)
+```
+
+```{r}
+library(ggplot2)
+
+ggplot() +
+  geom_histogram(data = acacia,
+                 mapping = aes(x = AXIS1, fill = "red"),
+                 alpha = 0.3) +
+  geom_histogram(data = acacia,
+                 mapping = aes(x = AXIS2, fill = "black"),
+                 alpha = 0.3) +
+  facet_wrap(~TREATMENT)
+```
 
