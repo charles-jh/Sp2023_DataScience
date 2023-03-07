@@ -90,9 +90,25 @@ avg_height <- summarize(by_site, avg_height = max(height))
 head(avg_height)
 ```
 
+# PIPING
+```{r}
+read.csv('../data-raw/shrub-volume-data.csv') %>% 
+group_by(site) %>%  
+summarize(avg_height = max(height)) ->
+avg_height2
+head(avg_height2)
+```
+```{r}
+read.csv("../data-raw/shrub-volume-data.csv") |>
+  mutate(volume = length * width * height) |>
+  group_by(site) |>
+  summarize(mean_volume = max(volume))
 
-
-
+read.csv("../data-raw/shrub-volume-data.csv") |>
+  mutate(volume = length * width * height) |>
+  group_by(experiment) |>
+  summarize(mean_volume = mean(volume))
+```
 
 
 
