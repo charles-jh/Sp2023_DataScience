@@ -7,6 +7,8 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(magrittr)
 ```
 
 ## R Markdown
@@ -28,3 +30,84 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Sequential Code
+
+```{r}
+numbers <- -300:546
+numbers <- 1:300
+numbers_mean <- mean(numbers)
+sqrt(x = numbers_mean)
+```
+
+
+## Nested Code
+```{r}
+numbers <- 1:300
+mean(numbers)
+sqrt(mean(numbers))
+```
+## Piping code
+implement with 'magrittr'
+```{r}
+library(magrittr)
+```
+pipe symbol is %>% or |
+```{r}
+1:300 %>% mean() %>% sqrt()
+```
+
+```{r}
+surveys <- read.csv(file = "../data-raw/surveys.csv")
+str(surveys)
+```
+
+```{r}
+surveys$year %>% mean()
+```
+
+```{r}
+surveys$weight %>% mean(na.rm = TRUE)
+```
+
+```{r}
+surveys1 <- select(surveys, year, month, day, species_id)
+```
+
+```{r}
+surveys2 <- select(surveys, year, species_id, weight) %>% filter(!is.na(weight)) %>%
+mutate(weight_kg = weight/1000) %>% select(year, species_id, weight_kg)
+head(surveys2)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
