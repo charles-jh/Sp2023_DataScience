@@ -1,7 +1,7 @@
 ---
-title: "shrub_volume"
+title: "Wrangling Portal"
 author: "Charles"
-date: "2023-03-07"
+date: "2023-03-02"
 output: html_document
 ---
 
@@ -28,3 +28,22 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r eval =TRUE}
+library(readr)
+surveys <- read.csv(file = "../data-raw/surveys.csv")
+head(surveys)
+
+species <- read.csv(file = "../data-raw/species.csv")
+head(species)
+
+plots <- read.csv(file = "../data-raw/plots.csv")
+head(plots)
+```
+
+
+
+
+
+
+

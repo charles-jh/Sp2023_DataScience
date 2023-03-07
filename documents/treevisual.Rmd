@@ -5,6 +5,8 @@ date: "2023-03-02"
 output: pdf_document
 ---
 
+We are working with UHURU.
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -46,6 +48,14 @@ trees$canopy_area <- trees$AXIS_1 * trees$AXIS_2
 ```{r}
 subset(trees, select = c(SURVEY, YEAR, SITE, canopy_area))
 ```
+```{r}
+data.frame(trees$SURVEY, trees$YEAR, trees$SITE, trees$canopy_area)
+```
+
+
+```{r}
+trees2 <- trees[c("SURVEY", "YEAR", "SITE", "canopy_area")]
+```
 
 ```{r}
 library(ggplot2)
@@ -56,6 +66,8 @@ ggplot(data = trees, mapping = aes(x = canopy_area, y = HEIGHT, color = TREATMEN
 
 ```{r}
 treesmod <- subset(trees, canopy_area <= 400)
+
+which(trees$canopy_area > 2000)
 ```
 
 ```{r}
@@ -65,7 +77,10 @@ ggplot(data = treesmod, mapping = aes(x = canopy_area, y = HEIGHT, color = TREAT
   facet_wrap(~SPECIES)
 ```
 
-
+```{r}
+numbers <- 1:10
+numbers[c(!4)]
+```
 
 
 
