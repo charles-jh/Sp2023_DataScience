@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
 ```
 
 ## R Markdown
@@ -28,3 +29,82 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+```{r eval =TRUE}
+library(readr)
+shrub_data <- read.csv(file = "../data-raw/shrub-volume-data.csv")
+head(shrub_data)
+```
+
+
+```{r}
+select(shrub_data, length)
+```
+
+```{r}
+select(shrub_data, site, experiment)
+```
+
+```{r}
+shrub_data <- mutate(shrub_data, area = length * width)
+head(shrub_data)
+```
+
+```{r}
+arrange(shrub_data, length)
+```
+
+```{r}
+filter(shrub_data, height > 5)
+```
+
+```{r}
+filter(shrub_data, height > 4 & width > 2)
+```
+
+```{r}
+filter(shrub_data, experiment == 1 | experiment == 3)
+```
+
+```{r}
+filter(shrub_data, !is.na(height))
+```
+
+```{r}
+shrub_volumes = mutate(shrub_data, volume = area * height)
+head(shrub_volumes)
+```
+
+```{r}
+shrub_dims <- read.csv('../data-raw/shrub-volume-data.csv')
+by_site <- group_by(shrub_dims, experiment)
+avg_height <- summarize(by_site, avg_height = mean(height))
+head(avg_height)
+```
+
+```{r}
+shrub_dims <- read.csv('../data-raw/shrub-volume-data.csv')
+by_site <- group_by(shrub_dims, site)
+avg_height <- summarize(by_site, avg_height = max(height))
+head(avg_height)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
