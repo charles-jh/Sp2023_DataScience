@@ -76,11 +76,15 @@ surveys1 <- select(surveys, year, month, day, species_id)
 
 ```{r}
 surveys2 <- select(surveys, year, species_id, weight) %>% filter(!is.na(weight)) %>%
-mutate(weight_kg = weight/1000) %>% select(year, species_id, weight_kg)
-head(surveys2)
+mutate(weight_kg = weight/1000) %>% select(year, species_id, weight_kg) %>%
+  filter(species_id == 'SH')
+str(surveys2)
 ```
 
-
+```{r}
+surveys2_filtered <- filter(surveys2, species_id == 'SH')
+str(surveys2_filtered)
+```
 
 
 
