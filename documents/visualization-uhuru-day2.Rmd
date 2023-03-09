@@ -8,6 +8,7 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
+library(dplyr)
 ```
 
 ## R Markdown
@@ -157,6 +158,10 @@ str(ds_weight_by_year)
 # piping to an argument that is not the first one
 
 Some functions do not take data as the first argument
+```{r}
+surveys <- read.csv(file = "../data-raw/surveys.csv")
+```
+
 
 ```{r}
 str(surveys)
