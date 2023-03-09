@@ -7,6 +7,7 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
 ```
 
 ## R Markdown
@@ -35,6 +36,15 @@ acacia <- read.csv(file = "../data-raw/ACACIA_DREPANOLOBIUM_SURVEY.txt",
                    na.strings = 'dead')
 
 ```
+
+```{r eval =TRUE}
+library(readr)
+tree <- read_tsv("../data-raw/TREE_SURVEYS.txt",
+               col_types = list(HEIGHT = col_double(),
+                                AXIS_2 = col_double()))
+
+```
+
 
 ```{r}
 head(acacia)
@@ -99,4 +109,46 @@ ggplot() +
                  alpha = 0.3) +
   facet_wrap(~TREATMENT)
 ```
+
+Visual QA and control
+```{r}
+str(acacia)
+is.numeric(acacia$CIRC)
+is.numeric(acacia$HEIGHT)
+```
+
+```{r}
+str(tree)
+is.numeric(tree$CIRC)
+is.numeric(tree$HEIGHT)
+```
+
+```{r}
+ggplot() +
+  geom_point(data = tree, mapping = aes(x = CIRC, y = HEIGHT, color = "gray",
+  alpha = 0.5)) +
+  geom_point(data = acacia, mapping = aes(x = CIRC, y = HEIGHT, color = "red")) +
+  geom_smooth(data = tree, mapping = aes(x = CIRC, y = HEIGHT)) +
+  geom_smooth(data = acacia, mapping = aes(x = CIRC, y = HEIGHT))
+```
+
+#LINEAR MODELS
+
+```{r}
+ggplot() +
+  geom_point(data = tree, mapping = aes(x = CIRC, y = HEIGHT, color = "gray",
+  alpha = 0.5)) +
+  geom_point(data = acacia, mapping = aes(x = CIRC, y = HEIGHT, color = "red")) +
+  scale_x_log10() +
+  scale_y_log10() +
+  geom_smooth(data = tree, mapping = aes(x = CIRC, y = HEIGHT), method = "lm") +
+  geom_smooth(data = acacia, mapping = aes(x = CIRC, y = HEIGHT), method = "lm")
+```
+
+
+
+
+
+
+
 
