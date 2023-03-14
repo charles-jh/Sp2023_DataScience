@@ -1,0 +1,106 @@
+---
+title: "Joining Data Tables"
+author: "Charles"
+date: "2023-03-14"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(magrittr)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+plots <- read.csv(file = "../data-raw/plots.csv")
+species <- read.csv(file = "../data-raw/species.csv")
+surveys <- read.csv(file = "../data-raw/surveys.csv")
+View(plots)
+View(species)
+View(surveys)
+```
+
+## Homework: Why do we need to join data tables?
+
+## Left, Right, and Full joins, along with Inner, can join tables based on shared data columns.
+```{r}
+inner_join(surveys, species, by = "species_id")
+```
+
+```{r}
+surveys %>% inner_join(species, by = "species_id") ->joined_table
+```
+
+```{r}
+str(joined_table)
+```
+
+```{r}
+plots %>% inner_join(surveys, by = "plot_id") %>% filter(plot_type != "Control") %>% 
+  head()
+```
+
+## Join via "intersect"
+```{r}
+intersect(surveys$species_id, species$species_id)
+```
+
+```{r}
+colnames(surveys)
+```
+
+```{r}
+intersect(colnames(plots), colnames(surveys)) %>% 
+  inner_join(surveys, plots, .) %>% 
+  filter(plot_type == "Rodent Exclosure")
+```
+
+##Left Join retains all values from the first, while right join retains all values from the second. Full join retains all data values from both.
+
+```{r}
+inner_join(surveys, plots, by = "plot_id") %>% inner_join(species, by = "species_id")
+```
+
+```{r}
+inner_join(surveys, plots, by = "plot_id") %>% 
+  inner_join(species, by = "species_id") %>% 
+  filter(taxa == "Rodent") %>% 
+  filter(!is.na(weight)) %>% 
+  filter(plot_type == "Control" | plot_type == "Long term Krat Exclosure") %>% 
+  select("year", "genus", "species", "weight", "plot_type")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
