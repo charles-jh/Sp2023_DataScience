@@ -1,0 +1,101 @@
+---
+title: "Joining-HW"
+author: "Charles"
+date: "2023-03-16"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(magrittr)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+plots <- read.csv(file = "../data-raw/plots.csv")
+species <- read.csv(file = "../data-raw/species.csv")
+surveys <- read.csv(file = "../data-raw/surveys.csv")
+View(plots)
+View(species)
+View(surveys)
+```
+
+Create a data frame with only data for the “species_id” “DO”, with the columns "year", "month", "day", "species_id", and "weight".
+
+```{r}
+filter(surveys, species_id == "DO") %>% 
+  select("year", "month", "day", "species_id", "weight") ->
+  filter_df
+  View(filter_df)
+```
+
+Create a data frame with only data for species IDs "PP" and "PB" and for years starting in 1995, with the columns "year", "species_id", and "hindfoot_length", with no missing values for "hindfoot_length".
+
+```{r}
+filter(surveys, species_id == "PP" | species_id == "PB" | year == "1995") %>% 
+  select("year", "species_id", "hindfoot_length") %>% 
+  filter(!is.na(hindfoot_length)) ->
+  filter_hl
+  View(filter_hl)
+```
+
+Create a data frame with the average "hindfoot_length" for each "species_id" in each "year" with no null values.
+```{r}
+surveys %>% filter(!is.na(hindfoot_length)) %>% 
+  group_by(species_id, year) %>% 
+  summarize(mean(hindfoot_length))
+```
+group()
+
+
+
+
+
+```{r}
+inner_join(surveys, plots, by = "plot_id") %>% 
+  inner_join(species, by = "species_id") %>% 
+  filter(taxa == "Rodent") %>% 
+  filter(!is.na(weight)) %>% 
+  filter(plot_type == "Control" | plot_type == "Long term Krat Exclosure") %>% 
+  select("year", "genus", "species", "weight", "plot_type")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
